@@ -11,7 +11,7 @@
             </div>
             <div class='div__section'>
                 <v-icon color='#8484d8' size='large' class='icon' icon='mdi-currency-usd'></v-icon>
-                <span class='span__data'>: {{price}} PLN</span>
+                <span class='span__data'>: {{price}} {{currency}}</span>
             </div>
         </div>
         <v-btn @click="() => deleteFun(id)" color="red" size='x-large' density="compact" icon='mdi-delete'></v-btn>
@@ -24,8 +24,9 @@ export default {
         type: String,
         animal: String,
         price: Number,
-        deleteFun: Function
-    }
+        deleteFun: Function,
+        currency: String,
+    },
 }
 </script>
 <style scoped lang="scss">
