@@ -9,7 +9,7 @@
           <router-link 
               @click.capture="onClickedHome" 
               class='link home' 
-              :style="{'color': clicked === '/home' ? '#8484d8' : '#c7c7c7'}" 
+              :style="{'color': clicked === '/' ? '#8484d8' : '#c7c7c7'}" 
               to="/">
               Home
           </router-link> 
@@ -44,12 +44,12 @@
 export default {
     data() {
         return {
-             clicked:'/home' 
+             clicked:'/' 
         }
     },
     methods: {
       onClickedHome() {
-          this.clicked = '/home'
+          this.clicked = '/'
       },
       onClickedAbout() {
           this.clicked = '/about'

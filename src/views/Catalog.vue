@@ -47,6 +47,13 @@
                         ></v-text-field>
                 </div>
             </div>
+            <v-select
+            v-model="this.currency"
+            clearable
+            label="Waluta"
+            :items="[...currencyList.map((item) => item.code), 'PLN']"
+            variant="outlined">
+            </v-select>
             <v-btn
             :disabled="loading"
             :loading="loading"
@@ -67,7 +74,8 @@
                     :type="product.type" 
                     :animal="product.animal" 
                     :price="+product.price" 
-                    :deleteFun="deleteProduct"/>
+                    :deleteFun="deleteProduct"
+                    :currency="currencyView"/>
             <ProductForm 
                     :products="products" 
                     :addFun="addProduct"
@@ -96,16 +104,20 @@ export default {
             productsFiltered: [],
             houseCategories: [],
             animalCategories: [],
+            currencyList: [],
             house: '',
             animal: '',
             price: '',
             priceMax:0,
             priceMin:0,
             search: '',
+            currency: 'PLN',
+            currencyView: 'PLN',
         }
     },
     mounted() {
         this.getProducts()
+        this.getCurrencyRates()
     },
     methods: {
         async getProducts() {
@@ -155,6 +167,11 @@ export default {
                 }
             })
         },
+        getCurrencyRates() {
+            axios.get('http://api.nbp.pl/api/exchangerates/tables/a/?format=json').then(res => {
+                this.currencyList = res.data[0].rates
+            })
+        },
         sortValues() {
             this.loading = !this.loading
 
@@ -173,6 +190,17 @@ export default {
                 }else{
                     sortedProducts = sortedProducts.sort((a, b) => b['price'] - a['price'])
                 }
+            }
+
+            if(this.currency !== '' && this.currency !== 'PLN' && this.currency){
+                let currencyRate = this.currencyList.find(item => item['code'] === this.currency)
+                this.currencyView = this.currency
+                sortedProducts = sortedProducts.map(product => {
+                    return {
+                        ...product,
+                        price: Math.round(product['price'] / currencyRate.mid * 100) / 100
+                    }
+                })
             }
 
             this.productsFiltered = sortedProducts
