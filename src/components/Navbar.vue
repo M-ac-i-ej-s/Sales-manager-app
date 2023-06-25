@@ -5,14 +5,32 @@
         <v-icon class='icon' icon='mdi-twitter'></v-icon>
       </div>
       <div class='div__links'>
-        <span @click.capture="onClickedHome">
-          <router-link class='link home' :style="{'color': clicked === 'homeClicked' ? '#8484d8' : '#c7c7c7'}" to="/">Home</router-link> 
+        <span>
+          <router-link 
+              @click.capture="onClickedHome" 
+              class='link home' 
+              :style="{'color': clicked === '/home' ? '#8484d8' : '#c7c7c7'}" 
+              to="/">
+              Home
+          </router-link> 
         </span>
         <span>
-          <router-link @click="onClickedAbout" class='link about' :style="{'color': clicked === 'aboutClicked' ? '#8484d8' : '#c7c7c7'}" to="/about">About</router-link>
+          <router-link 
+              @click="onClickedAbout" 
+              class='link' 
+              :style="{'color': clicked === '/about' ? '#8484d8' : '#c7c7c7'}" 
+              to="/about">
+              About
+          </router-link>
         </span>
         <span>
-          <router-link @click="onClickedCatalog" class='link catalog' :style="{'color': clicked === 'catalogClicked' ? '#8484d8' : '#c7c7c7'}" to="/catalog">Catalog</router-link> 
+          <router-link 
+              @click="onClickedCatalog" 
+              class='link' 
+              :style="{'color': clicked === '/catalog' ? '#8484d8' : '#c7c7c7'}" 
+              to="/catalog">
+              Catalog
+          </router-link> 
         </span>
       </div>
       <div class='div__icons'>
@@ -26,19 +44,26 @@
 export default {
     data() {
         return {
-             clicked:'homeClicked' 
+             clicked:'/home' 
         }
     },
     methods: {
       onClickedHome() {
-          this.clicked = 'homeClicked'
+          this.clicked = '/home'
       },
       onClickedAbout() {
-          this.clicked = 'aboutClicked'
+          this.clicked = '/about'
       },
       onClickedCatalog() {
-          this.clicked = 'catalogClicked'
+          this.clicked = '/catalog'
+      },
+      getPage() {
+          const currentUrl = window.location.pathname;
+          this.clicked = currentUrl;
       }
+    },
+    mounted() {
+        this.getPage()
     }
 
 }
