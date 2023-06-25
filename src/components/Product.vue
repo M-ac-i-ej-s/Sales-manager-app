@@ -3,23 +3,29 @@
         <div class='div__sections'>
             <div class='div__section'>
                 <v-icon color='#8484d8' size='large' class='icon' icon='mdi-home-outline'></v-icon>
-                <span class='span__data'>: Domek na drzewie</span>
+                <span class='span__data'>: {{type}}</span>
             </div>
             <div class='div__section'>
                 <v-icon color='#8484d8' size='large' class='icon' icon='mdi-pig-variant-outline' ></v-icon>
-                <span class='span__data'>: Wiewiórka</span>
+                <span class='span__data'>: {{animal}}</span>
             </div>
             <div class='div__section'>
                 <v-icon color='#8484d8' size='large' class='icon' icon='mdi-currency-usd'></v-icon>
-                <span class='span__data'>: 340 PLN</span>
+                <span class='span__data'>: {{price}} PLN</span>
             </div>
         </div>
-        <v-btn color="red" size='x-large' density="compact" icon='mdi-delete'></v-btn>
+        <v-btn @click="() => deleteFun(id)" color="red" size='x-large' density="compact" icon='mdi-delete'></v-btn>
     </div>
 </template>
 <script>
 export default {
-    
+    props: {
+        id: Number,
+        type: String,
+        animal: String,
+        price: Number,
+        deleteFun: Function
+    }
 }
 </script>
 <style scoped lang="scss">
@@ -35,7 +41,7 @@ export default {
         .div__section {
             display: flex;
             align-items: center;
-            margin: 5px 0 5px 0;
+            margin: 11px 0 11px 0;
             .span__data {
                 font-size: 20px;
         }
